@@ -1,2 +1,6 @@
-# Projec_Bike_Store
-Analysis of Bike Store sales data.
+# Bike Store sales data analysis
+
+### Task
+Analyse sales data and create a dashboard to track KPIs and provide relevant insights.
+
+### Business Questions
