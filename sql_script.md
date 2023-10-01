@@ -9,24 +9,31 @@ AND shipped_date IS NULL;
 ```
 Checking for duplicates in products:
 ```sql
-SELECT product_name, COUNT(*)
+SELECT
+	product_name,
+	COUNT(*)
 FROM products
 GROUP BY product_name
 HAVING COUNT(*) > 1;
 ```
 The same products with different categories assigned to them:
 ```sql
-SELECT product_name, COUNT(*), group_concat(CAST(category_name AS CHAR) SEPARATOR ', ') AS category_ids
+SELECT
+	product_name,
+	COUNT(*),
+	GROUP_CONCAT(CAST(category_name AS CHAR) SEPARATOR ', ') AS category_ids
 FROM products as p
 JOIN categories as c
-ON p.category_id = c.category_id
+	ON p.category_id = c.category_id
 GROUP BY product_name
 HAVING COUNT(*) > 1;
 ```
 This could be a duplicate or a completely different product; for the purpose of this project, this will be treated as duplicate entries. I will remove the duplicates and only keep the first entry.
 Product_id is also used in the order_items table so the values need to be updated there as well. First, I check if there are any products with more than one duplicate entry:
 ```sql
-SELECT product_name, COUNT(*)
+SELECT
+	product_name,
+	COUNT(*)
 FROM products
 GROUP BY product_name
 HAVING COUNT(*) > 2
@@ -50,22 +57,19 @@ WHERE product_id IN(250, 303);
 ```
 Now, I need to create a column for the products with one duplicate that will return the first product_id entry. First, I use row_number() to identify duplicates:
 ```sql
-SELECT 
-  	*, 
+SELECT 	*, 
 	ROW_NUMBER() OVER(PARTITION BY product_name ORDER BY product_id) as rnk
 FROM products
 ```
 Then I create the column with first product_id for each product using CASE function:
 ```sql
-SELECT	
-  	*,
+SELECT	*,
 	CASE
 		WHEN rnk = 1 THEN product_id
 		ELSE MIN(product_id) OVER(partition by product_name)
 	END AS first_id
 FROM (
-	SELECT 
-    		*, 
+	SELECT 	*, 
 		ROW_NUMBER() OVER(PARTITION BY product_name ORDER BY product_id) as rnk
 	FROM products
         ) as sub
@@ -73,38 +77,37 @@ FROM (
 Now I can use this query in a common table expression (CTE) to identify products with different product_id than first_id in the order_items table:
 ```sql
 WITH rnk_cte AS (
-	SELECT	
-    		*,
+	SELECT	*,
 		CASE
 			WHEN rnk = 1 THEN product_id
 			ELSE MIN(product_id) OVER(partition by product_name)
 		END AS first_id
 	FROM (
-		SELECT 
-      			*, 
+		SELECT 	*, 
 			ROW_NUMBER() OVER(PARTITION BY product_name ORDER BY product_id) as rnk
 		FROM products
         ) as sub
 )
 
-SELECT a.product_id, product_name, first_id
+SELECT
+	a.product_id,
+	product_name,
+	first_id
 FROM order_items as a
 JOIN rnk_cte as b
-ON a.product_id = b.product_id
+	ON a.product_id = b.product_id
 WHERE a.product_id <> first_id;
 ```
 Now I can replace the product_id with the first_id
 ```sql
 WITH rnk_cte AS (
-	SELECT	
-    		*,
+	SELECT	*,
 		CASE
 			WHEN rnk = 1 THEN product_id
 			ELSE MIN(product_id) OVER(partition by product_name)
 		END AS first_id
 	FROM (
-		SELECT 
-     			*, 
+		SELECT 	*, 
 			ROW_NUMBER() OVER(PARTITION BY product_name ORDER BY product_id) as rnk
 		FROM products
         ) as sub
@@ -121,15 +124,13 @@ Now we can check if this worked by using the previous statement, as you can see 
 Now we can also remove the duplicates from the products table:
 ```sql
 WITH rnk_cte AS (
-	SELECT	
-    		*,
+	SELECT	*,
 		CASE
 			WHEN rnk = 1 THEN product_id
 			ELSE MIN(product_id) OVER(partition by product_name)
 		END AS first_id
 	FROM (
-		SELECT 
-     			*, 
+		SELECT 	*, 
 			ROW_NUMBER() OVER(PARTITION BY product_name ORDER BY product_id) as rnk
 		FROM products
         ) as sub
@@ -211,8 +212,7 @@ ORDER BY year, a.store_id
 ```sql
 CREATE VIEW top_cust AS (
 WITH cte_2 AS (
-SELECT
-	*,
+SELECT	*,
 	RANK() OVER(PARTITION BY month(order_date),year(order_date), store_id ORDER BY total_revenue DESC) as rnk
 FROM (
 SELECT
