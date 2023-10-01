@@ -1,12 +1,12 @@
---#### Data Cleaning
-/*Every table is checked for duplicates, missing values, and inconsistent data types.
-Order_status was inconsistent:*/
-
+#### Data Cleaning
+Every table is checked for duplicates, missing values, and inconsistent data types.
+Order_status was inconsistent:
+```sql
 UPDATE orders
 SET order_status = 3
 WHERE order_date = required_date
 AND shipped_date IS NULL;
-
+```
 --Checking for duplicates in products:
 
 SELECT product_name, COUNT(*)
