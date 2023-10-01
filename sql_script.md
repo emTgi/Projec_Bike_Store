@@ -1,4 +1,4 @@
-#### Data Cleaning
+### Data Cleaning
 Every table is checked for duplicates, missing values, and inconsistent data types.
 Order_status was inconsistent:
 ```sql
@@ -142,7 +142,7 @@ JOIN rnk_cte as b
 	ON a.product_id = b.product_id
 WHERE a.product_id <> first_id;
 ```
-#### Data Analysis
+### Data Analysis
 For analysis and later visualisation in Power BI, I will create various, different views.
 ##### VIEW nr 1
 ```sql
