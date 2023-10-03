@@ -50,7 +50,7 @@ AND shipped_date IS NULL;
 ```
 
 #### Duplicates
-Only the **products** table that has duplicate rows:
+Only the **products** table has duplicate rows:
 ```sql
 SELECT
 	product_name,
@@ -61,7 +61,7 @@ HAVING COUNT(*) > 1;
 ```
 ![Duplicates](https://github.com/emTgi/Project_Bike_Store/assets/114177110/663fff64-e5b4-4a69-9f1e-6dee9a2b1a57)
 
-The same products with different categories assigned to them:
+The only difference between duplicate rows apart from _product_id_ column is the category assigned to them:
 ```sql
 SELECT
 	product_name,
@@ -73,8 +73,10 @@ JOIN categories as c
 GROUP BY product_name
 HAVING COUNT(*) > 1;
 ```
-This could be a duplicate or a completely different product; for the purpose of this project, this will be treated as duplicate entries. I will remove the duplicates and only keep the first entry.
-Product_id is also used in the order_items table so the values need to be updated there as well. First, I check if there are any products with more than one duplicate entry:
+![duplicates_different_categories](https://github.com/emTgi/Project_Bike_Store/assets/114177110/3eb64d09-0141-4df8-8f20-e4a65a512649)
+
+This could be a duplicate or a completely different product; for the purpose of this project, these will be treated as duplicate entries. I will remove the duplicates and only keep the first entry.
+_Product_id_ is also used in the **order_items** table so the values need to be updated there as well. First, I check if there are any products with more than one duplicate entry:
 ```sql
 SELECT
 	product_name,
@@ -83,30 +85,36 @@ FROM products
 GROUP BY product_name
 HAVING COUNT(*) > 2
 ```
+![triple_duplicate](https://github.com/emTgi/Project_Bike_Store/assets/114177110/b88454c2-1de5-4ced-8001-a1647215a0f3)
+
 There is only one item that has more than one duplicate so I will change it manually:
 ```sql
 SELECT *
 FROM products
 WHERE product_name = 'Electra Townie Go! 8i - 2017/2018';
 ```
-The first entry has product_id of 192 so in the order_items table I will change every product with id 250 or 303 to display 192:
+![triple_duplicate_ids](https://github.com/emTgi/Project_Bike_Store/assets/114177110/09d64249-6db4-425a-9eb1-81128ab76149)
+
+The first entry has _product_id_ of 192 so in the **order_items** table I will change every product with id 250 or 303 to display 192:
 ```sql
 UPDATE order_items
 SET product_id = 192
 WHERE product_id IN(250, 303);
 ```
-In the products table, I will just delete those rows:
+In the **products** table, I will just delete those rows:
 ```sql
 DELETE FROM products
 WHERE product_id IN(250, 303);
 ```
-Now, I need to create a column for the products with one duplicate that will return the first product_id entry. First, I use row_number() to identify duplicates:
+Now, I need to create a column for the products with one duplicate that will return the first _product_id_ entry. First, I use ROW_NUMBER() to identify duplicates:
 ```sql
 SELECT 	*, 
 	ROW_NUMBER() OVER(PARTITION BY product_name ORDER BY product_id) as rnk
 FROM products
 ```
-Then I create the column with first product_id for each product using CASE function:
+![duplicates_rank](https://github.com/emTgi/Project_Bike_Store/assets/114177110/37b0c8db-91d0-404c-9cc4-4bd86ceb0320)
+
+Then I create the column with first _product_id_ for each product using CASE function:
 ```sql
 SELECT	*,
 	CASE
@@ -119,6 +127,8 @@ FROM (
 	FROM products
         ) as sub
 ```
+![first_id_duplicates](https://github.com/emTgi/Project_Bike_Store/assets/114177110/5ad3ea56-36cc-43b8-9e06-7cb1fc0c606a)
+
 Now I can use this query in a common table expression (CTE) to identify products with different product_id than first_id in the order_items table:
 ```sql
 WITH rnk_cte AS (
@@ -143,6 +153,8 @@ JOIN rnk_cte as b
 	ON a.product_id = b.product_id
 WHERE a.product_id <> first_id;
 ```
+![different_ids](https://github.com/emTgi/Project_Bike_Store/assets/114177110/dd901869-ea0e-4939-bef8-628e9dd1559a)
+
 Now I can replace the product_id with the first_id
 ```sql
 WITH rnk_cte AS (
@@ -164,8 +176,6 @@ JOIN rnk_cte as b
 SET a.product_id = first_id
 WHERE a.product_id <> first_id;
 ```
-Now we can check if this worked by using the previous statement, as you can see the duplicate product entries have been replaced:
- llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
 Now we can also remove the duplicates from the products table:
 ```sql
 WITH rnk_cte AS (
