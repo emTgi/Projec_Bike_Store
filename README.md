@@ -1,6 +1,6 @@
 # Bike Store sales data analysis
 ### Final Dashboard
-#### Main Page
+##### Main Page
 ![exec_dash](https://github.com/emTgi/Project_Bike_Store/assets/114177110/cecae3e1-6b00-47b8-af41-e41dc20a1740)
 #### Stores Page
 ![store_dash](https://github.com/emTgi/Project_Bike_Store/assets/114177110/527ad44f-55ce-4a3f-aef4-b00c5fcb5137)
