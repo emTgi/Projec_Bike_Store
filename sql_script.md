@@ -1,13 +1,13 @@
 ### Data Cleaning
 Every table is checked for duplicates, missing values, and inconsistent data types.
 #### Modifying data types
-As an example, products table will be used. It currently has 6 columns:
+As an example, **products** table will be used. It currently has 6 columns:
 
 ![products_old_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/2f228396-c89f-4cb1-a24d-95e63d8bfb1f)
 
 ![products_table](https://github.com/emTgi/Project_Bike_Store/assets/114177110/d52adba9-1522-445f-9a58-296ab3284788)
 
-By exploring the table further, I noticed that list_price needs to be as precise as possible as it is financial data so I will be changing it to DECIMAL data type, and product_name can be changed to VARCHAR to decrease the file size and improve performance:
+By exploring the table further, I noticed that _list_price_ needs to be as precise as possible as it is financial data so I will be changing it to DECIMAL data type, and _product_name_ can be changed to VARCHAR to decrease the file size and improve performance:
 ```sql
 ALTER TABLE products
 MODIFY product_name VARCHAR(255),
