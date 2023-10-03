@@ -5,6 +5,20 @@ As an example, products table will be used. It currently has 6 columns:
 
 ![products_old_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/2f228396-c89f-4cb1-a24d-95e63d8bfb1f)
 
+By exploring the table further, I noticed that list_price needs to be as precise as possible as it is financial data so I will be changing it to DECIMAL data type, and product_name can be changed to VARCHAR to decrease the file size and improve performance:
+
+![products_table](https://github.com/emTgi/Project_Bike_Store/assets/114177110/d52adba9-1522-445f-9a58-296ab3284788)
+
+To modify products table I use this query:
+```sql
+ALTER TABLE products
+MODIFY product_name VARCHAR(255),
+MODIFY list_price DECIMAL(10,2);
+```
+This has successfully changed the data types of both columns:
+
+![products_new_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/a6e8782e-ca66-4176-a39d-531be932b0fa)
+
 Order_status was inconsistent:
 ```sql
 UPDATE orders
