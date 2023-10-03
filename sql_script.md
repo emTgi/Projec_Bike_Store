@@ -17,11 +17,11 @@ This has successfully changed the data types of both columns:
 
 ![products_new_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/a6e8782e-ca66-4176-a39d-531be932b0fa)
 
-Another example is the orders table, where dates are stored as text:
+Another example is the **orders** table, where dates are stored as text:
 
 ![orders_old_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/9fe592e4-45b2-4efc-ae99-cd903c73ba3e)
 
-I will use a similar query to update the data types:
+I want to change these 3 columns to be stored as DATE data type:
 ```sql
 ALTER TABLE orders
 MODIFY order_date DATE,
@@ -33,7 +33,7 @@ Again this has successfully changed the data types:
 ![orders_new_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/36bd32ae-4df9-49f8-8563-e5b4b45480c5)
 
 #### Handling missing values
-Only the shipped_date column in the orders table has missing values:
+Only the _shipped_date_ column in the **orders** table has missing values:
 ```sql
 SELECT *
 FROM orders
@@ -41,7 +41,7 @@ WHERE shipped_date IS NULL;
 ```
 ![NULL_values_orders](https://github.com/emTgi/Project_Bike_Store/assets/114177110/26f307ee-75c9-4cb3-9bce-d926982f6fad)
 
-However, these are cancelled or unprocessed orders so it is expected that this column might have NULL values. For this project, I will treat all rows with NULL shipped_date as canceled:
+However, these are cancelled or unprocessed orders so it is expected that this column might have NULL values. For this project, I will treat all rows with NULL values as cancelled:
 ```sql
 UPDATE orders
 SET order_status = 3
@@ -50,7 +50,7 @@ AND shipped_date IS NULL;
 ```
 
 #### Duplicates
-Only the products table that has duplicate rows, to check for duplicate Checking for duplicates in products:
+Only the **products** table that has duplicate rows:
 ```sql
 SELECT
 	product_name,
@@ -59,6 +59,8 @@ FROM products
 GROUP BY product_name
 HAVING COUNT(*) > 1;
 ```
+![Duplicates](https://github.com/emTgi/Project_Bike_Store/assets/114177110/663fff64-e5b4-4a69-9f1e-6dee9a2b1a57)
+
 The same products with different categories assigned to them:
 ```sql
 SELECT
