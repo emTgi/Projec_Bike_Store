@@ -14,8 +14,8 @@ Clean and analyse sales data to create a dashboard that tracks KPIs and provides
 
 | Tool | Task | Link |
 | :---: | --- | --- |
-| MySQL | Data Transformation, Data Cleaning, Data Analysis | [View](https://github.com/emTgi/Project_Bike_Store/blob/main/sql_script.md) |
-| Power BI | Data Analysis, Data Visualisation | [Download](https://github.com/emTgi/Project_Bike_Store/raw/main/Bike%20Store%20Report.pbix) |
+| MySQL | Data Transformation, Data Cleaning, Data Analysis | [View Scripts](https://github.com/emTgi/Project_Bike_Store/blob/main/sql_script.md) |
+| Power BI | Data Analysis, Data Visualisation | [Download Dashboard](https://github.com/emTgi/Project_Bike_Store/raw/main/Bike%20Store%20Report.pbix) |
 ### Dataset
 The dataset used in this project was found on [Kaggle](https://www.kaggle.com/datasets/dillonmyrick/bike-store-sample-database)
 ### Other Dashboard Pages
