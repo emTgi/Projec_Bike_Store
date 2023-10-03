@@ -199,8 +199,9 @@ WHERE a.product_id <> first_id;
 ```
 ### Data Analysis
 For analysis and visualisation in Power BI, I will create various, different views.
-##### Orders_view
-For each _order_id_ I calculate the final price, the number of items purchased, and whether it was shipped on time or late.
+#### Orders_view
+For each order, I calculate the final price, the number of items purchased, and whether it was shipped on time or late.
+
 ![orders_view](https://github.com/emTgi/Project_Bike_Store/assets/114177110/08de9a84-bce2-4231-85df-6714ff04a89d)
 ```sql
 CREATE VIEW orders_view AS (
@@ -229,7 +230,10 @@ GROUP BY
     	store_id
 );
 ```
-##### VIEW nr 2
+#### Store_view
+For each store, I calculate monthly orders, revenue, customers and % of late orders.
+
+![store_view](https://github.com/emTgi/Project_Bike_Store/assets/114177110/0cf7a090-e38f-4df6-bfb8-7f7f1777f771)
 ```sql
 CREATE VIEW store_view AS (
 WITH cte_1 AS (
@@ -265,7 +269,10 @@ GROUP BY
 ORDER BY year, a.store_id
 );
 ```
-##### VIEW nr 3
+#### Top_customer
+For each store, I find the monthly top customer by revenue.
+
+![top_cust](https://github.com/emTgi/Project_Bike_Store/assets/114177110/816c8b54-09fc-47c5-b217-4e84b5bf21cc)
 ```sql
 CREATE VIEW top_cust AS (
 WITH cte_2 AS (
@@ -299,7 +306,10 @@ WHERE rnk = 1
 ORDER BY year(order_date), month(order_date), store_id
 );
 ```
-##### VIEW nr 4
+#### Products_view
+For each product, I calculate the total number of items sold, revenue, orders and current stock by store.
+
+![prod_view](https://github.com/emTgi/Project_Bike_Store/assets/114177110/1f22aeb2-a80b-44ab-9217-e7a7bac9fe47)
 ```sql
 CREATE VIEW prod_view AS (
 WITH cte_3 as (
@@ -334,7 +344,10 @@ GROUP BY
     	store_id_3
 );
 ```
-##### VIEW nr 5
+#### Category_view
+For each category, I calculate the total number of items sold, revenue, and orders.
+
+![cat_view](https://github.com/emTgi/Project_Bike_Store/assets/114177110/d2279c45-1985-4007-940c-543d55fd45b2)
 ```sql
 CREATE VIEW cat_view AS (
 WITH category_cte AS (
@@ -357,7 +370,10 @@ JOIN category_cte b
 GROUP BY category_name
 );
 ```
-##### VIEW nr 6
+#### Brand_view
+For each brand, I calculate the total number of items sold, revenue, and orders.
+
+![brand_view](https://github.com/emTgi/Project_Bike_Store/assets/114177110/34720af4-7cf2-4162-9b30-6a2b8a487dcd)
 ```sql
 CREATE VIEW brand_view AS (
 WITH brand_cte AS (
@@ -379,4 +395,34 @@ JOIN brand_cte b
 	ON a.product_id = b.product_id
 GROUP BY brand_name
 );
+```
+#### Executive_view
+Total monthly orders, revenue, customers and % of late orders.
+
+![exec_view](https://github.com/emTgi/Project_Bike_Store/assets/114177110/d9cac877-e688-4655-8da3-ee4f098d7e35)
+```sql
+CREATE VIEW exec_view AS (
+SELECT
+	start_of_month,
+    year,
+    SUM(orders) as total_orders,
+    SUM(revenue) as total_revenue,
+    SUM(uq_customers) as total_customers,
+    AVG(late_rate)
+FROM store_view
+GROUP BY start_of_month, year
+);
+```
+#### Discount_analysis
+Total number of items sold by discount level.
+
+![discount_view](https://github.com/emTgi/Project_Bike_Store/assets/114177110/136a2b28-ed72-4e8a-9c57-ddacddb1ab56)
+```sql
+SELECT
+	product_id,
+    SUM(quantity) as total_quantity,
+    discount
+FROM order_items
+GROUP BY product_id, discount
+ORDER BY product_id;
 ```
