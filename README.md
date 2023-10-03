@@ -1,7 +1,6 @@
 # Bike Store Sales Project
 ### Dashboard - Main Page
 ![exec_dash_2](https://github.com/emTgi/Project_Bike_Store/assets/114177110/733d3cfd-a12c-4269-b2fd-d57136de3ee3)
-[Download](https://github.com/emTgi/Project_Bike_Store/raw/main/Bike%20Store%20Report.pbix) this dashboard.
 ### Task
 Clean and analyse sales data to create a dashboard that tracks KPIs and provides relevant insights to support business growth.
 ### Sample Dashboard Questions
@@ -13,10 +12,10 @@ Clean and analyse sales data to create a dashboard that tracks KPIs and provides
 - Who are the top customers by location?
 ### Tools
 
-| Tool | Task |
-| :---: | --- |
-| MySQL | Data Transformation, Data Cleaning, Data Analysis |
-| Power BI | Data Analysis, Data Visualisation |
+| Tool | Task | Link |
+| :---: | --- | --- |
+| MySQL | Data Transformation, Data Cleaning, Data Analysis | [View](https://github.com/emTgi/Project_Bike_Store/blob/main/sql_script.md) |
+| Power BI | Data Analysis, Data Visualisation | [Download](https://github.com/emTgi/Project_Bike_Store/raw/main/Bike%20Store%20Report.pbix) |
 ### Dataset
 The dataset used in this project was found on [Kaggle](https://www.kaggle.com/datasets/dillonmyrick/bike-store-sample-database)
 ### Other Dashboard Pages
