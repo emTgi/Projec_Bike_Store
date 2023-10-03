@@ -198,8 +198,9 @@ JOIN rnk_cte as b
 WHERE a.product_id <> first_id;
 ```
 ### Data Analysis
-For analysis and later visualisation in Power BI, I will create various, different views.
+For analysis and visualisation in Power BI, I will create various, different views.
 ##### VIEW nr 1
+![orders_view](https://github.com/emTgi/Project_Bike_Store/assets/114177110/08de9a84-bce2-4231-85df-6714ff04a89d)
 ```sql
 CREATE VIEW orders_view AS (
 SELECT
