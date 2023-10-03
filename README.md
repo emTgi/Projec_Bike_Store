@@ -1,12 +1,17 @@
-# Bike Store sales data analysis
+# Bike Store Sales Project
 ### Dashboard - Main Page
-![exec_dash](https://github.com/emTgi/Project_Bike_Store/assets/114177110/cecae3e1-6b00-47b8-af41-e41dc20a1740)
+![exec_dash_2](https://github.com/emTgi/Project_Bike_Store/assets/114177110/733d3cfd-a12c-4269-b2fd-d57136de3ee3)
 ### Task
-Analyse sales data and create a dashboard to track KPIs and provide relevant insights.
-
-### Business Questions
-
+Clean and analyse sales data to create a dashboard that tracks KPIs and provides relevant insights to support business growth.
+### Sample Dashboard Questions
+- What is the trend for monthly revenue?
+- Which product generates the most revenue?
+- What is the most popular brand?
+- How is each store performing?
+- What are the stock levels for each product?
+- Who are the top customers by location?
 ### Tools
+
 | Tool | Task |
 | :---: | --- |
 | MySQL | Data Transformation, Data Cleaning, Data Analysis |
