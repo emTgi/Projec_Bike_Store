@@ -5,11 +5,9 @@ As an example, products table will be used. It currently has 6 columns:
 
 ![products_old_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/2f228396-c89f-4cb1-a24d-95e63d8bfb1f)
 
-By exploring the table further, I noticed that list_price needs to be as precise as possible as it is financial data so I will be changing it to DECIMAL data type, and product_name can be changed to VARCHAR to decrease the file size and improve performance:
-
 ![products_table](https://github.com/emTgi/Project_Bike_Store/assets/114177110/d52adba9-1522-445f-9a58-296ab3284788)
 
-To modify products table I use this query:
+By exploring the table further, I noticed that list_price needs to be as precise as possible as it is financial data so I will be changing it to DECIMAL data type, and product_name can be changed to VARCHAR to decrease the file size and improve performance:
 ```sql
 ALTER TABLE products
 MODIFY product_name VARCHAR(255),
@@ -19,14 +17,40 @@ This has successfully changed the data types of both columns:
 
 ![products_new_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/a6e8782e-ca66-4176-a39d-531be932b0fa)
 
-Order_status was inconsistent:
+Another example is the orders table, where dates are stored as text:
+
+![orders_old_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/9fe592e4-45b2-4efc-ae99-cd903c73ba3e)
+
+I will use a similar query to update the data types:
+```sql
+ALTER TABLE orders
+MODIFY order_date DATE,
+MODIFY required_date DATE,
+MODIFY shipped_date DATE;
+```
+Again this has successfully changed the data types:
+
+![orders_new_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/36bd32ae-4df9-49f8-8563-e5b4b45480c5)
+
+#### Handling missing values
+Only the shipped_date column in the orders table has missing values:
+```sql
+SELECT *
+FROM orders
+WHERE shipped_date IS NULL;
+```
+![NULL_values_orders](https://github.com/emTgi/Project_Bike_Store/assets/114177110/26f307ee-75c9-4cb3-9bce-d926982f6fad)
+
+However, these are cancelled or unprocessed orders so it is expected that this column might have NULL values. For this project, I will treat all rows with NULL shipped_date as canceled:
 ```sql
 UPDATE orders
 SET order_status = 3
 WHERE order_date = required_date
 AND shipped_date IS NULL;
 ```
-Checking for duplicates in products:
+
+#### Duplicates
+Only the products table that has duplicate rows, to check for duplicate Checking for duplicates in products:
 ```sql
 SELECT
 	product_name,
