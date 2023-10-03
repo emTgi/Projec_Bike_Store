@@ -1,7 +1,7 @@
 # Bike Store Sales Project
 ### Dashboard - Main Page
 ![exec_dash_2](https://github.com/emTgi/Project_Bike_Store/assets/114177110/733d3cfd-a12c-4269-b2fd-d57136de3ee3)
-[Link](https://github.com/emTgi/Project_Bike_Store/raw/main/Bike%20Store%20Report.pbix) to the dashboard.
+[Download](https://github.com/emTgi/Project_Bike_Store/raw/main/Bike%20Store%20Report.pbix) this dashboard.
 ### Task
 Clean and analyse sales data to create a dashboard that tracks KPIs and provides relevant insights to support business growth.
 ### Sample Dashboard Questions
