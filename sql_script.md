@@ -2,7 +2,9 @@
 Every table is checked for duplicates, missing values, and inconsistent data types.
 #### Modifying data types
 As an example, products table will be used. It currently has 6 columns:
+
 ![products_old_data_types](https://github.com/emTgi/Project_Bike_Store/assets/114177110/2f228396-c89f-4cb1-a24d-95e63d8bfb1f)
+
 Order_status was inconsistent:
 ```sql
 UPDATE orders
